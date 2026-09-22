@@ -1,6 +1,6 @@
 #Main_module
 import os
-os.environ['LOKY_MAX_CPU_COUNT'] = str(os.cpu_count())
+os.environ['LOKY_MAX_CPU_COUNT'] = str(os.cpu_count() or 4)
 
 from data_ingestion import DataIngestion
 from summary_of_data import summary_of_data
@@ -32,10 +32,10 @@ visual_Module(duplicate_removed_data)
 input_data, target = input_output_separator(duplicate_removed_data, target_column=input("Enter the target column name:\n"))
 new_target, task_type, label_encoder = target_processor(target, task_type="auto")
 
-save_artifacts = True  
+save_artifacts = False 
 
 if task_type == "r":
-    # Unpack the scaler here as well!
+
     Best_model, Model_name, original_columns, feature_names, Scaler = reg_model(input_data, new_target)
     
     if save_artifacts:
