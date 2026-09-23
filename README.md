@@ -1,16 +1,40 @@
-# DataForge
+# DataForge 1.0 ⚡
 
-DataForge is a modular, production-grade Python library designed to automate the heavy lifting of data science workflows. It transforms experimental data preprocessing and modeling scripts into a robust, object-oriented pipeline. 
+DataForge is a modular, automated machine learning pipeline designed for zero-friction data preprocessing and model deployment. It intelligently handles data ingestion, cleaning, dynamic encoding, and automated algorithm selection for both regression and classification tasks.
 
-By standardizing how datasets are cleaned, scaled, and evaluated, DataForge eliminates boilerplate code and prevents common pitfalls like data leakage during model training.
+## 🧠 Core Features
 
-## Current Focus: DataForge 1.0 (Core ML Engine)
-The current iteration focuses on hardening the underlying machine learning logic into a reliable production package. 
-* **Automated Preprocessing:** Object-oriented modules for dynamic missing data imputation, outlier clipping, and feature scaling.
-* **Pipeline Integration:** Custom components built to integrate seamlessly with scikit-learn's `Pipeline` API.
-* **Model Selection:** Automated routing and hyperparameter optimization for classification models (Logistic Regression, SVM, Random Forest).
+* **Dynamic Preprocessing Routing:** Automatically evaluates column skewness to route numerical features to either IQR or Z-Score outlier clipping.
+* **Multivariate Imputation:** Bypasses basic mean/median filling by utilizing `KNNImputer` and `IterativeImputer` to predict and fill missing values based on underlying feature relationships.
+* **Smart Categorical Encoding:** Prevents the "dummy variable trap" and memory crashes by automatically routing high-cardinality text columns (>10 unique values) to Frequency Encoding, while using One-Hot Encoding for low-cardinality features.
+* **AutoML Model Selection:** Evaluates the target variable to infer the task type, handles class imbalances dynamically via SMOTE, trains a suite of algorithms (LightGBM, Random Forest, Logistic/Linear Regression), and automatically exports the highest-scoring model and its preprocessors as deployment-ready `.pkl` artifacts.
 
-## Roadmap: DataForge 2.0 (Agentic Orchestration)
-Future releases will evolve the core engine into an intelligent state machine.
-* **LangChain & LangGraph:** Introducing reasoning agents to dynamically analyze datasets and orchestrate the preprocessing nodes based on contextual context.
-* **Django Backend:** Wrapping the pipeline into a REST API for web-based execution and natural language querying.
+## 📂 Repository Structure
+
+```text
+DATAFORGE_1.0/
+├── dataforge/                  # Core Python package containing modular pipeline steps
+│   ├── data_ingestion.py       # File handling and memory downcasting
+│   ├── null_fill.py            # Multivariate imputation logic
+│   ├── target_tester.py        # Target inference and Label Encoding
+│   └── ...                     
+├── run_pipeline.py             # Main orchestrator script
+├── requirements.txt            # Dependency list
+└── README.md
+
+⚙️ Installation
+Clone the repository and install the required dependencies:
+
+git clone [https://github.com/Aaditya-229/DataForge_1.0.git](https://github.com/Aaditya-229/DataForge_1.0.git)
+cd DataForge_1.0
+pip install -r requirements.txt
+
+🚀 Quickstart
+To run the automated pipeline on your own dataset, simply execute the main orchestrator from your terminal:
+
+python run_pipeline.py
+
+The script will trigger a native file dialog for you to select your .csv or .xlsx file, prompt you for the target column, and autonomously execute the pipeline through to model export.
+
+
+
