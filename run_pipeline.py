@@ -4,7 +4,7 @@ os.environ['LOKY_MAX_CPU_COUNT'] = str(os.cpu_count() or 4)
 
 from dataforge.data_ingestion import DataIngestion
 from dataforge.summary_of_data import summary_of_data
-from dataforge.column_remover import Remove_col
+from dataforge.column_remover import remove_columns
 from dataforge.null_fill import multivariate_imputation
 from dataforge.outlier_clipper import dynamic_outlier_clipping
 from dataforge.duplicate_removal import remove_duplicates
@@ -19,12 +19,15 @@ from dataforge.export import export_dataforge_artifacts
 
 
 
-
-file_name = DataIngestion.file_selection()
-data = DataIngestion.data_reading(file_name)
+DataIngestion.print_banner()
+data = DataIngestion.data_reading(input("Enter the dataset path or leave blank to select via GUI:\n"))
 new_data = DataIngestion.memory_downcasting(data)
 summary_of_data(new_data)
-col_removed_data = Remove_col(new_data)
+
+cols_input = input("\nEnter columns to drop (comma-separated), or press Enter to skip: ").strip()
+cols_to_drop = [c.strip() for c in cols_input.split(",")] if cols_input else None
+
+col_removed_data = remove_columns(new_data, cols_to_drop)
 multivariate_imputed_data = multivariate_imputation(col_removed_data, strategy='knn', n_neighbors=5, max_iter=10)
 clipped_data = dynamic_outlier_clipping(multivariate_imputed_data)
 duplicate_removed_data = remove_duplicates(clipped_data)
@@ -32,7 +35,7 @@ visual_Module(duplicate_removed_data)
 input_data, target = input_output_separator(duplicate_removed_data, target_column=input("Enter the target column name:\n"))
 new_target, task_type, label_encoder = target_processor(target, task_type="auto")
 
-save_artifacts = False 
+save_artifacts = True if input("Do you want to save the model artifacts? (y/n):\n").strip().lower() == 'y' else False 
 
 if task_type == "r":
 
