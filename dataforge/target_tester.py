@@ -4,7 +4,7 @@ import numpy as np
 import warnings
 from sklearn.preprocessing import LabelEncoder
 
-def target_processor(target: pd.Series, task_type="auto"):
+def target_processor(target: pd.Series, task_type="auto", verbose: bool = True):
     
     target_dtype = target.dtype
     unique_num = target.nunique()
