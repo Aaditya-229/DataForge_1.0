@@ -1,0 +1,13 @@
+# Python Cache
+__pycache__/
+*.py[cod]
+
+# Jupyter
+.ipynb_checkpoints/
+
+# DataForge Artifacts (Keep local deployment files off GitHub)
+*.pkl
+dataforge_model/
+
+# IDEs
+.vscode/
