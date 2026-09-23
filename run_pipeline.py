@@ -2,19 +2,19 @@
 import os
 os.environ['LOKY_MAX_CPU_COUNT'] = str(os.cpu_count() or 4)
 
-from data_ingestion import DataIngestion
-from summary_of_data import summary_of_data
-from column_remover import Remove_col
-from null_fill import multivariate_imputation
-from outlier_clipper import dynamic_outlier_clipping
-from duplicate_removal import remove_duplicates
-from visual import visual_Module
-from target_parser import input_output_separator
-from target_tester import target_processor
-from regression import reg_model
-from classification_scaling  import Cls_model_prep
-from classification_modelling import cls_model_train
-from export import export_dataforge_artifacts
+from dataforge.data_ingestion import DataIngestion
+from dataforge.summary_of_data import summary_of_data
+from dataforge.column_remover import Remove_col
+from dataforge.null_fill import multivariate_imputation
+from dataforge.outlier_clipper import dynamic_outlier_clipping
+from dataforge.duplicate_removal import remove_duplicates
+from dataforge.visual import visual_Module
+from dataforge.target_parser import input_output_separator
+from dataforge.target_tester import target_processor
+from dataforge.regression import reg_model
+from dataforge.classification_scaling  import Cls_model_prep
+from dataforge.classification_modelling import cls_model_train
+from dataforge.export import export_dataforge_artifacts
 
 
 
